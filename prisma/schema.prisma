@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model cuenta {
+  idcuenta   Int      @id @default(autoincrement())
+  clave      String?  @db.VarChar(200)
+  usuario_id Int      @unique
+  usuario    usuario? @relation(fields: [usuario_id], references: [idusuario], onDelete: Cascade, onUpdate: NoAction, map: "cuenta_ibfk_1")
+
+  @@index([usuario_id], map: "usuario_id")
+}
+
+model estado {
+  idestado Int       @id @default(autoincrement())
+  nombre   String?   @db.VarChar(30)
+  usuario  usuario[]
+}
+
+model rol {
+  idrol    Int       @id @default(autoincrement())
+  nombre   String?   @db.VarChar(20)
+  usuarios usuario[]
+}
+
+model usuario {
+  idusuario      Int       @id @default(autoincrement())
+  nombre         String?   @db.VarChar(50)
+  correo         String?   @unique @db.VarChar(200)
+  fecha_creacion DateTime? @db.Date
+  genero         String?   @db.VarChar(100)
+  estado_id      Int?
+  cuenta         cuenta?
+  rol            rol       @relation(fields: [rolId], references: [idrol])
+  rolId          Int
+  estado         estado?   @relation(fields: [estado_id], references: [idestado])
+}

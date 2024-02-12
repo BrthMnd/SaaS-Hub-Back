@@ -1,0 +1,43 @@
+GET http://localhost:3000/api/user
+
+### Login
+POST http://localhost:3000/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "correo": "t1@test.com",
+    "clave": "test123"
+}
+### register 
+POST http://localhost:3000/api/register HTTP/1.1
+content-type: application/json
+
+{
+    "correo": "t1@test.com",
+    "nombre": "test1",
+    "clave": "t1"
+
+}
+### logout
+POST http://localhost:3000/api/logout HTTP/1.1
+content-type: application/json
+
+{
+}
+### RECOVERY
+POST http://localhost:3000/api/recovery HTTP/1.1
+content-type: application/json
+
+{
+    "correo":"deydoromle@gufum.com"
+}
+
+### Code Verify
+POST http://localhost:3000/api/verifyCode HTTP/1.1
+content-type: application/json
+Set-Cookie: CodeVerify=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDb2RlVmVyaWZ5IjozMDQsImlkIjo0LCJpYXQiOjE3MDczMjQ5NzIsImV4cCI6MTcwNzQxMTM3Mn0.Rv59Q8gMaYMWK6lrY0T0L5KNVOEMf5HB_CMmE-H45gQ; Path=/
+
+{
+    "code":"304"
+}
+
