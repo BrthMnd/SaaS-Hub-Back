@@ -164,43 +164,32 @@ export const VerifyCodeRecoveryPassword = async (req, res) => {
 };
 export const ChangePassword = async (req, res) => {
   const { clave } = req.body;
-  const Title = "Verifica tu cuenta";
+  const Title = "Se ha cambiado tu contraseña";
   const { userId } = req.cookies;
 
   try {
     const passwordhash = bcrypt.hashSync(clave, 10);
 
-    const userExist = await prisma.usuario.findFirst({
-      where: {
-        correo: correo,
-      },
+    const usuario = await prisma.usuario.findUnique({
+      where: { idusuario: userId },
+      select: { cuenta: true },
     });
-
-    if (userExist) {
-      return res.status(400).json("usuario ya registrado");
+    
+    if (!usuario || !usuario.cuenta) {
+      return res.status(404).json(useError('El usuario o la cuenta no existe.'));
     }
-
-    const newUser = await prisma.usuario.create({
-      data: {
-        nombre,
-        correo,
-        fecha_creacion: new Date(),
-        rol: { connect: { idrol: 1 } },
-        cuenta: { create: { clave: passwordhash } },
-      },
+    
+    const cuentaId = usuario.cuenta.idcuenta;
+    
+    const cuentaActualizada = await prisma.cuenta.update({
+      where: { idcuenta: cuentaId },
+      data: { clave: passwordhash },
     });
 
-    const token = await creacionToken({ id: newUser.idusuario });
-    res.cookie("token", token);
-    // send mail
-    await SendMail(TemplateHtml(correo, Title, "hola"), Title, correo);
-
-    res.json({
-      correo: newUser.correo,
-      nombre: newUser.nombre,
-    });
+console.log(cuentaActualizada)
+    res.status(200).json(useSend('Contraseña actualizada'));
   } catch (error) {
     console.error("Error durante el registro:", error);
-    res.status(500).json({ message: "Error interno del servidor", error });
+    res.status(500).json({ message: "Error interno del servidor" });
   }
 };
