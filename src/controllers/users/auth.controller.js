@@ -91,14 +91,15 @@ export const login = async (req, res) => {
   }
 };
 
-// nos permite vaciar la cookies y los token al cerrar sesion
-// ? nota de Brandon, la estoy borrando desde. el front.
+//? nos permite vaciar la cookies y los token al cerrar sesion
+// ! nota de Brandon, la estoy borrando desde. el front.
 export const logout = (req, res) => {
   res.cookie("token", "", {
     expires: new Date(0),
   });
   return res.sendStatus(200);
 };
+// ToDo: Separar desde aqui
 export const VerifySession = () => {
   const { token } = req.cookie();
   console.log(token);
@@ -174,20 +175,22 @@ export const ChangePassword = async (req, res) => {
       where: { idusuario: userId },
       select: { cuenta: true },
     });
-    
+
     if (!usuario || !usuario.cuenta) {
-      return res.status(404).json(useError('El usuario o la cuenta no existe.'));
+      return res
+        .status(404)
+        .json(useError("El usuario o la cuenta no existe."));
     }
-    
+
     const cuentaId = usuario.cuenta.idcuenta;
-    
+
     const cuentaActualizada = await prisma.cuenta.update({
       where: { idcuenta: cuentaId },
       data: { clave: passwordhash },
     });
 
-console.log(cuentaActualizada)
-    res.status(200).json(useSend('Contraseña actualizada'));
+    console.log(cuentaActualizada);
+    res.status(200).json(useSend("Contraseña actualizada"));
   } catch (error) {
     console.error("Error durante el registro:", error);
     res.status(500).json({ message: "Error interno del servidor" });
