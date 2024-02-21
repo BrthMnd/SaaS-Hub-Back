@@ -16,6 +16,6 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api", routes);
+routes(app);
 
 export default app;

@@ -4,11 +4,7 @@ import bcrypt from "bcrypt";
 import { creacionToken, verifyToken } from "../../libs/jwt.js";
 import { useError } from "../../helpers/useError.js";
 import { SendMail } from "../../helpers/Mails/SendMail.js";
-import {
-  NotificationTemplate,
-  TemplateEmail,
-  TemplateHtml,
-} from "../../helpers/Mails/Template.js";
+import { TemplateEmail, TemplateHtml } from "../../helpers/Mails/Template.js";
 import { useSend } from "../../helpers/useSend.js";
 import jwt from "jsonwebtoken";
 
@@ -58,7 +54,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const { correo, clave } = req.body;
-
   try {
     const usuarioEncontrado = await prisma.usuario.findUnique({
       where: {

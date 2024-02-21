@@ -1,10 +1,10 @@
 import { Router } from "express";
 import UserRoutes from "./Users/users.routes.js";
 import AuntRoute from "./auth.routes.js";
-import { autenticacionRequerida } from "../middlewares/validateToken.js";
+import { VerifyTokenJWT } from "../middlewares/validateToken.js";
 const router = Router();
 
 router.use("/", AuntRoute);
-router.use("/user", autenticacionRequerida, UserRoutes);
+router.use("/user", VerifyTokenJWT, UserRoutes);
 
-export default router;
+export default (app) => app.use("/api", router);
