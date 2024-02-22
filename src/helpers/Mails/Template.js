@@ -1,10 +1,14 @@
-export const TemplateHtml = (toEmail, Title, parr) =>
-  `
+export const TemplateHtml = (toEmail, Title, parr, redirectUrl) => `
+
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -20,6 +24,7 @@ export const TemplateHtml = (toEmail, Title, parr) =>
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
 
     h1 {
@@ -35,18 +40,45 @@ export const TemplateHtml = (toEmail, Title, parr) =>
       color: #555555;
       text-align: center;
     }
+
+    a {
+      background-color: black
+    }
+
+    button:hover {
+      background-color: bisque;
+    }
+
+    button {
+      width: 10em;
+      height: 5ex;
+      background-color: rgb(23, 109, 179);
+      border: 2px solid rgb(50, 20, 132);
+      border-radius: 10px;
+      font-weight: bold;
+      color: black;
+      cursor: pointer;
+      
+    
+    }
   </style>
 </head>
 
 <body>
   <div>
     <h1>${Title}</h1>
-    <strong>${toEmail}</strong>
+    <strong><h4>${toEmail}</h4></strong>
     <br>
-    <p>${parr}</p>
+    <a href="${redirectUrl}"><button class="fas fa-heart">Verificar</button></a>
   </div>
 </body>
-`;
+
+</html>
+
+`
+;
+
+
 export function TemplateEmail(
   email,
   details,
