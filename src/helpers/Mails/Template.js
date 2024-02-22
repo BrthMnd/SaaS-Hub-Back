@@ -75,15 +75,13 @@ export const TemplateHtml = (toEmail, Title, parr, redirectUrl) => `
 
 </html>
 
-`
-;
-
+`;
 
 export function TemplateEmail(
   email,
   details,
   token,
-  url = "confirmacion_correo/"
+  url = "http://localhost:5173/authenticate/VerifyEmail"
 ) {
   return `
   <!DOCTYPE html>
@@ -96,8 +94,8 @@ export function TemplateEmail(
 <body style="font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #ffffff; color: #000000; text-align: center;">
   <div id="email___content" style="max-width: 600px; margin: 40px auto; padding: 20px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1); border-radius: 8px; border: 1px solid #d1d9e6;">
   <h2 style="color: #333; font-size: 24px; margin-bottom: 10px;">Hola <strong style="font-weight: bold;">${email}</strong></h2>
-  // <p style="color: #555; line-height: 1.6; margin-bottom: 20px;">${details}</p>
-    
+   <p style="color: #555; line-height: 1.6; margin-bottom: 20px;">${details}</p>
+   <a href="${url}/${token}" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: #ffffff; text-decoration: none; border-radius: 5px; transition: background-color 0.3s ease;">Haz clic aquí para continuar</a>
     <p class="footer" style="font-size: 12px; color: #777; margin-top: 20px;">Si no solicitaste este correo, por favor ignóralo.</p>
   </div>
 </body>

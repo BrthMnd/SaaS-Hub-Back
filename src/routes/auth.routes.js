@@ -20,5 +20,7 @@ router.get("/verify", VerifySession);
 
 router.post("/recovery", RecoveryPassword);
 router.post("/verifyCode", VerifyCodeRecoveryPassword);
+// ! Verify Token aqui abajo hay que confirar el back
+// ! router.post("/verifyToken");
 
 export default router;

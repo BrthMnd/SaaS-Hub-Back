@@ -13,7 +13,6 @@ const prisma = new PrismaClient();
 export const register = async (req, res) => {
   const { nombre, correo, clave } = req.body;
   const Title = "Verifica tu cuenta";
-  
 
   try {
     const passwordhash = bcrypt.hashSync(clave, 10);
@@ -33,17 +32,20 @@ export const register = async (req, res) => {
         nombre,
         correo,
         fecha_creacion: new Date(),
-        rol: { connect: { idrol: 1 } },
+        rol: { connect: { idrol: 2 } },
         cuenta: { create: { clave: passwordhash } },
       },
     });
 
     const token = await creacionToken({ id: newUser.idusuario });
-    res.cookie("token", token);
-    // send mail
-    const urlBoton='http://localhost:5173/authenticate/login'
 
-    await SendMail(TemplateHtml(correo, Title, "hola",urlBoton), Title, correo);
+    // ? const urlBoton = "http://localhost:5173/authenticate/login";
+
+    await SendMail(
+      TemplateEmail(correo, "Registro en SAAS", token),
+      Title,
+      correo
+    );
 
     res.json({
       correo: newUser.correo,

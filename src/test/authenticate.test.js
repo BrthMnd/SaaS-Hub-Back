@@ -11,4 +11,11 @@ describe("Autenticar los usuarios", () => {
     expect(response.body).toHaveProperty("correo", "dufyapiyda@gufum.com");
     expect(response.header["set-cookie"]).toBeDefined();
   });
+  // test("Registro del usuario", async () => {
+  //   const response = await request(app).post("/api/register").send({
+  //     correo: "test1@gmail.com",
+  //     password: "test123",
+  //   });
+  //   expect(response.status).toBe(200);
+  // });
 });
