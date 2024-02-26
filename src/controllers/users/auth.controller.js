@@ -9,9 +9,12 @@ import { useSend } from "../../helpers/useSend.js";
 import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
+
+
 //registro
 export const register = async (req, res) => {
-  const { nombre, correo, clave } = req.body;
+  const { nombre, genero, correo, clave } = req.body;
+
   const Title = "Verifica tu cuenta";
 
   try {
@@ -24,12 +27,13 @@ export const register = async (req, res) => {
     });
 
     if (userExist) {
-      return res.status(400).json("usuario ya registrado");
+      return res.status(400).json("Este correo ya existe");
     }
 
     const newUser = await prisma.usuario.create({
       data: {
         nombre,
+        genero,
         correo,
         fecha_creacion: new Date(),
         rol: { connect: { idrol: 2 } },
@@ -56,6 +60,7 @@ export const register = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor", error });
   }
 };
+
 
 export const login = async (req, res) => {
   const { correo, clave } = req.body;
