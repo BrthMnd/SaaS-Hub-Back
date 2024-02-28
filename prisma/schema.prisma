@@ -34,7 +34,7 @@ model usuario {
   correo         String?   @unique @db.VarChar(200)
   fecha_creacion DateTime? @db.Date
   genero         String?   @db.VarChar(100)
-  estado_id      Int?
+  estado_id      Int?      @default(2)
   cuenta         cuenta?
   rol            rol       @relation(fields: [rolId], references: [idrol])
   rolId          Int

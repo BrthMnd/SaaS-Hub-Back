@@ -29,7 +29,6 @@ export const register = async (req, res) => {
     if (userExist) {
       return res.status(400).json("Este correo ya existe");
     }
-
     const newUser = await prisma.usuario.create({
       data: {
         nombre,
@@ -38,9 +37,10 @@ export const register = async (req, res) => {
         fecha_creacion: new Date(),
         rol: { connect: { idrol: 2 } },
         cuenta: { create: { clave: passwordhash } },
+        estado: { connect: { idestado: 2 } }, // Asegúrate de establecer el ID correcto
       },
     });
-
+    
     const token = await creacionToken({ id: newUser.idusuario });
 
     // ? const urlBoton = "http://localhost:5173/authenticate/login";
