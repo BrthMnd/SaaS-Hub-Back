@@ -26,6 +26,7 @@ export const getCookie = async (req, res) => {
       .json({ message: "Error interno del servidor", err: error });
   }
 };
+
 export const getMany = async (req, res) => {
   try {
     const usuario = await prisma.usuario.findMany({
@@ -45,6 +46,7 @@ export const getMany = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
 export const getFirst = async (req, res) => {
   const UserId = parseInt(req.params.id);
   try {
@@ -62,6 +64,7 @@ export const getFirst = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
 export const post = async (req, res) => {
   const UserId = parseInt(req.params.id);
   try {
@@ -96,6 +99,8 @@ export const put = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+
 export const Delete = async (req, res) => {
   const UserId = parseInt(req.params.id);
   try {
@@ -104,12 +109,20 @@ export const Delete = async (req, res) => {
     });
 
     if (!usuario) {
-      return res.status(400).json({ message: "Usuarios no encontrados" });
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    return res.json();
+    // Usuario encontrado, ahora eliminar
+    await prisma.usuario.delete({
+      where: { idusuario: UserId },
+    });
+
+    return res.json({ message: "Usuario eliminado exitosamente" });
   } catch (error) {
-    console.error("Error al obtener usuarios:", error);
+    console.error("Error al obtener/eliminar usuario:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+
+
