@@ -82,6 +82,7 @@ export const post = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
 export const put = async (req, res) => {
   const UserId = parseInt(req.params.id);
   try {
