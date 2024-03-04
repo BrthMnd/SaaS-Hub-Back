@@ -87,7 +87,11 @@ export const post = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
-export const update = async (req, res) => {
+
+
+
+export const put = async (req, res) => {
+
   const UserId = parseInt(req.params.id);
   const { nombre, correo,genero } = req.body; // Asumiendo que los datos a actualizar se reciben en el cuerpo de la solicitud
 
