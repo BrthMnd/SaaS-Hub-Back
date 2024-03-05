@@ -90,10 +90,10 @@ export const post = async (req, res) => {
 
 
 
-export const put = async (req, res) => {
+export const update = async (req, res) => {
 
   const UserId = parseInt(req.params.id);
-  const { nombre, correo,genero } = req.body; // Asumiendo que los datos a actualizar se reciben en el cuerpo de la solicitud
+  const { nombre,genero } = req.body; // Asumiendo que los datos a actualizar se reciben en el cuerpo de la solicitud
 
   try {
     const usuario = await prisma.usuario.findFirst({
@@ -107,7 +107,7 @@ export const put = async (req, res) => {
     // Actualizar la información del usuario
     const updatedUsuario = await prisma.usuario.update({
       where: { idusuario: UserId },
-      data: { nombre, correo,genero },
+      data: { nombre, genero },
     });
 
     return res.json({"Se actualizo con exito":updatedUsuario});
