@@ -8,7 +8,7 @@ import {
   VerifyCodeRecoveryPassword,
   EmailVerify,
 } from "../controllers/users/auth.controller.js";
-
+import { Delete } from "../controllers/users/user.controller.js";
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.post("/logout", logout);
 
 router.get("/verify", VerifySession);
 
-
+router.delete("/user/:id", Delete);
 
 router.post("/recovery", RecoveryPassword);
 router.post("/verifyCode", VerifyCodeRecoveryPassword);
