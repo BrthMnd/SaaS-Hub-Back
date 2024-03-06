@@ -81,11 +81,16 @@ export const login = async (req, res) => {
       return res.status(400).json(useError("clave incorrecta"));
 
     const token = await creacionToken({ id: usuarioEncontrado.idusuario });
+    console.log(token)
     res.cookie("token", token);
 
     res.json({
       correo: usuarioEncontrado.correo,
       nombre: usuarioEncontrado.nombre,
+      genero:usuarioEncontrado.genero,
+      clave,
+      estado:usuarioEncontrado.cuenta,
+      idusuario:usuarioEncontrado.idusuario,
       token: token,
     });
   } catch (error) {

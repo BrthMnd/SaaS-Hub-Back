@@ -18,6 +18,7 @@ export const getCookie = async (req, res) => {
       id: usuario.idusuario,
       nombre: usuario.nombre,
       correo: usuario.correo,
+      token:usuario.token
     });
   } catch (error) {
     console.error("Error al obtener el perfil del usuario:", error);
@@ -26,6 +27,10 @@ export const getCookie = async (req, res) => {
       .json({ message: "Error interno del servidor", err: error });
   }
 };
+
+
+
+
 
 export const getMany = async (req, res) => {
   try {
@@ -58,7 +63,7 @@ export const getFirst = async (req, res) => {
       return res.status(400).json({ message: "Usuarios no encontrados" });
     }
 
-    return res.json();
+    return res.json(usuario);
   } catch (error) {
     console.error("Error al obtener usuarios:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
@@ -82,20 +87,33 @@ export const post = async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
-export const put = async (req, res) => {
+
+
+
+export const update = async (req, res) => {
+
   const UserId = parseInt(req.params.id);
+  const { nombre,genero } = req.body; // Asumiendo que los datos a actualizar se reciben en el cuerpo de la solicitud
+
   try {
     const usuario = await prisma.usuario.findFirst({
       where: { idusuario: UserId },
     });
 
     if (!usuario) {
-      return res.status(400).json({ message: "Usuarios no encontrados" });
+      return res.status(400).json({ message: "Usuario no encontrado" });
     }
 
-    return res.json();
+    // Actualizar la información del usuario
+    const updatedUsuario = await prisma.usuario.update({
+      where: { idusuario: UserId },
+      data: { nombre, genero },
+    });
+
+    return res.json({"Se actualizo con exito":updatedUsuario});
+    
   } catch (error) {
-    console.error("Error al obtener usuarios:", error);
+    console.error("Error al actualizar usuario:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
