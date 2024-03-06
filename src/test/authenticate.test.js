@@ -4,11 +4,11 @@ import app from "../app";
 describe("Autenticar los usuarios", () => {
   test("Iniciar sesion", async () => {
     const response = await request(app).post("/api/login").send({
-      correo: "dufyapiyda@gufum.com",
+      correo: "keydoyagne@gufum.com",
       clave: "test123",
     });
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("correo", "dufyapiyda@gufum.com");
+    expect(response.body).toHaveProperty("correo", "keydoyagne@gufum.com");
     expect(response.header["set-cookie"]).toBeDefined();
   });
   // test("Registro del usuario", async () => {

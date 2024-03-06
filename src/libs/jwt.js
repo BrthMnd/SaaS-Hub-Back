@@ -18,12 +18,13 @@ export function creacionToken(payload) {
 }
 export async function verifyToken(payload) {
   console.log("Token...");
+  console.log(payload);
   try {
-    const decode = await jwt.decode(payload);
-    console.log(decode);
+    await jwt.verify(payload.token, TOKEN_SECRET);
+
+    const decode = await jwt.decode(payload.token);
     return decode;
   } catch (error) {
-    console.log(error);
-    return error;
+    throw error;
   }
 }

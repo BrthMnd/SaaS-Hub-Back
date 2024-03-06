@@ -5,7 +5,7 @@ POST http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
 
 {
-    "correo": "dufyapiyda@gufum.com",
+    "correo": "keydoyagne@gufum.com",
     "clave": "test123"
 }
 ### register 
@@ -41,3 +41,11 @@ Set-Cookie: CodeVerify=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDb2RlVmVyaWZ5Ijoz
     "code":"304"
 }
 
+
+### Email Verify
+POST http://localhost:3000/api/EmailVerify HTTP/1.1
+content-type: application/json
+
+{
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsImlhdCI6MTcwOTIzODc1NSwiZXhwIjoxNzA5MzI1MTU1fQ.O-so2Iv_TNiPJIHEgoJXkKd_zPBHcoFcK0t2RT-ZihE"
+}

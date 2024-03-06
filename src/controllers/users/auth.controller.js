@@ -10,7 +10,6 @@ import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
-
 //registro
 export const register = async (req, res) => {
   const { nombre, genero, correo, clave } = req.body;
@@ -40,7 +39,7 @@ export const register = async (req, res) => {
         estado: { connect: { idestado: 2 } }, // Asegúrate de establecer el ID correcto
       },
     });
-    
+
     const token = await creacionToken({ id: newUser.idusuario });
 
     // ? const urlBoton = "http://localhost:5173/authenticate/login";
@@ -60,7 +59,6 @@ export const register = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor", error });
   }
 };
-
 
 export const login = async (req, res) => {
   const { correo, clave } = req.body;
@@ -199,5 +197,26 @@ export const ChangePassword = async (req, res) => {
   } catch (error) {
     console.error("Error durante el registro:", error);
     res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+export const EmailVerify = async (req, res) => {
+  const { token } = req.body;
+  try {
+    const tokenV = await verifyToken({ token });
+    if (!tokenV) return res.status(400).json(useError("Invalid Data"));
+
+    const user = await prisma.usuario.update({
+      where: {
+        idusuario: tokenV.id,
+      },
+      data: {
+        estado_id: 1,
+      },
+    });
+
+    return res.status(200).json(useError("token Valid", user));
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(useError("No Valid", error));
   }
 };
