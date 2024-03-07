@@ -7,6 +7,7 @@ import {
   RecoveryPassword,
   VerifyCodeRecoveryPassword,
   EmailVerify,
+  verifyTokenLogin,
 } from "../controllers/users/auth.controller.js";
 import { Delete } from "../controllers/users/user.controller.js";
 
@@ -26,5 +27,7 @@ router.post("/recovery", RecoveryPassword);
 router.post("/verifyCode", VerifyCodeRecoveryPassword);
 // ! Verify Token aqui abajo hay que confirar el back
 router.post("/EmailVerify", EmailVerify);
+
+router.post("/verifyToken", verifyTokenLogin);
 
 export default router;

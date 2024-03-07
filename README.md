@@ -31,4 +31,9 @@ VALUES (1, 'activo');
 INSERT INTO saasbd.estado (idestado, nombre)
 VALUES (2, 'inactivo');
 
+INSERT INTO saasbd.rol (idestado, nombre)
+VALUES (1, 'activo');
+INSERT INTO saasbd.rol (idestado, nombre)
+VALUES (2, 'inactivo');
+
 ```
