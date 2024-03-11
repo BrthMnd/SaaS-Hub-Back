@@ -242,6 +242,8 @@ export const verifyTokenLogin = async (req, res) => {
         idusuario: true,
         correo: true,
         nombre: true,
+        rol: true,
+        estado: true,
       },
     });
 
