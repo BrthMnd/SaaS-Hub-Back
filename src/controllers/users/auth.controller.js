@@ -81,16 +81,16 @@ export const login = async (req, res) => {
       return res.status(400).json(useError("clave incorrecta"));
 
     const token = await creacionToken({ id: usuarioEncontrado.idusuario });
-    console.log(token)
+    console.log(token);
     res.cookie("token", token);
 
     res.json({
       correo: usuarioEncontrado.correo,
       nombre: usuarioEncontrado.nombre,
-      genero:usuarioEncontrado.genero,
+      genero: usuarioEncontrado.genero,
       clave,
-      estado:usuarioEncontrado.cuenta,
-      idusuario:usuarioEncontrado.idusuario,
+      estado: usuarioEncontrado.cuenta,
+      idusuario: usuarioEncontrado.idusuario,
       token: token,
     });
   } catch (error) {
@@ -216,6 +216,34 @@ export const EmailVerify = async (req, res) => {
       },
       data: {
         estado_id: 1,
+      },
+      select: {
+        clave: false,
+      },
+    });
+
+    return res.status(200).json(useError("token Valid", user));
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(useError("No Valid", error));
+  }
+};
+export const verifyTokenLogin = async (req, res) => {
+  const { token } = req.cookies;
+  try {
+    const tokenV = await verifyToken({ token });
+    if (!tokenV) return res.status(400).json(useError("Invalid Data"));
+
+    const user = await prisma.usuario.findFirst({
+      where: {
+        idusuario: tokenV.id,
+      },
+      select: {
+        idusuario: true,
+        correo: true,
+        nombre: true,
+        rol: true,
+        estado: true,
       },
     });
 
