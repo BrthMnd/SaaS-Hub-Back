@@ -59,9 +59,10 @@ export const register = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor", error });
   }
 };
-
+// ! no esta tomando en cuenta la linea 76 o 81 password
 export const login = async (req, res) => {
   const { correo, clave } = req.body;
+  bcrypt.compare(clave);
   try {
     const usuarioEncontrado = await prisma.usuario.findUnique({
       where: {
@@ -72,12 +73,12 @@ export const login = async (req, res) => {
     if (!usuarioEncontrado)
       return res.status(400).json(useError("Usuario no encontrado"));
 
-    const usuarioIgual = await bcrypt.compare(
+    const passwordValidate = await bcrypt.compare(
       clave,
       usuarioEncontrado.cuenta.clave
     );
 
-    if (!usuarioIgual)
+    if (!passwordValidate)
       return res.status(400).json(useError("clave incorrecta"));
 
     const token = await creacionToken({ id: usuarioEncontrado.idusuario });
