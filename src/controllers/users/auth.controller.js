@@ -62,7 +62,7 @@ export const register = async (req, res) => {
 // ! no esta tomando en cuenta la linea 76 o 81 password
 export const login = async (req, res) => {
   const { correo, clave } = req.body;
-  bcrypt.compare(clave);
+  // bcrypt.compare(clave);
   try {
     const usuarioEncontrado = await prisma.usuario.findUnique({
       where: {
