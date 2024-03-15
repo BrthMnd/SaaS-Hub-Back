@@ -79,7 +79,7 @@ export const login = async (req, res) => {
     );
 
     if (!passwordValidate)
-      return res.status(400).json(useError("clave incorrecta"));
+      return res.status(400).json(useError("Clave incorrecta"));
 
     const token = await creacionToken({ id: usuarioEncontrado.idusuario });
     console.log(token);
